@@ -6,7 +6,7 @@ var bodyParser = require("body-parser");
 
 var app = express();
 
-var PORT = process.env.PORT || 3000;
+var PORT = process.env.PORT || 3070;
 
 // express will use bodyparser to help determine routing
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -26,6 +26,6 @@ app.use("./routes/htmlRoutes");
 //  DB CONNECT and FRONT-END LISTENING PORT
 
     app.listen(PORT, function() {
-        console.log("WELLWISHES db connected and server listening at port " + PORT);
+        console.log("WISHES db connected and server listening at port " + PORT);
     });
 
