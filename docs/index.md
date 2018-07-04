@@ -47,3 +47,7 @@ DELIVERABLE ONE TASKs:
 
 
 
+SCHEDULED TASKS DUE DATES
+Authentication and User Options - 7/12
+UI complete- 7/10
+
