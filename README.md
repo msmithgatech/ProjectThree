@@ -19,13 +19,6 @@ APP DEVELOPMENT RESPONSIBILITIES:
 
     Database -  Mamie Smith
 
-    Testing -  Mamie Smith  
 
+Up-to-date documentation resides in the docs folder which is published to GitHub.
 
-DELIVERABLE ONE TASKs:
-
-    Plan -  CHristie Harwell
-
-    Design -  Bianca Williams
-
-    Research -  Mamie Smith
