@@ -1,3 +1,3 @@
-USE wishes;
+USE wishes_db;
 
-select * from giftpkg;
+select * from wishes;
