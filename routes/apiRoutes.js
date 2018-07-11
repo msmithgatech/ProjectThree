@@ -5,6 +5,15 @@ var db = require("../models");
        //==== CRUD ROUTES  ====
 module.exports = function(app) {
 
+    app.get("/", function(req, res) {
+        db.wishes.findAll({
+            where: {wishtostatus: true}
+        })
+            .then(function(dbwishes) {
+                res.json(dbwishes)
+            })
+    });
+
           //  FIND ALL ACTIVE WISHES
     app.get("/api/active", function(req, res) {
         db.wishes.findAll({
