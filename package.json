@@ -1,0 +1,20 @@
+{
+  "name": "wellwishes",
+  "version": "1.0.0",
+  "description": "Medical care packages for recipients in developing countries",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "author": "Mamie Smith",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "express": "^4.16.3",
+    "mysql": "^2.15.0",
+    "mysql2": "^1.5.3",
+    "nodemon": "^1.18.0",
+    "sequelize": "^4.38.0"
+  }
+}
