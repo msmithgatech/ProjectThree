@@ -5,32 +5,21 @@ var db = require("../models");
        //==== CRUD ROUTES  ====
 module.exports = function(app) {
 
-    app.get("/", function(req, res) {
-        db.wishes.findAll({
-            where: {wishtostatus: true}
+          //  FIND ALL RECIPIENTS
+    app.get("/showall", function(req, res) {
+            db.wishes.findAll({group: "wishcenter, wishfrom"})
         })
             .then(function(dbwishes) {
                 res.json(dbwishes)
             })
-    });
-
-          //  FIND ALL ACTIVE WISHES
-    app.get("/api/active", function(req, res) {
-        db.wishes.findAll({
-            where: {wishtostatus: true}
-        })
-        .then(function(dbwishes) {
-            res.json(dbwishes)
-        })
-    });
+        };
 
 
-          //  FIND ACTIVE RECORDS FOR ONE RECIPIENT
-    app.get("/api/one", function(req, res) {
-        db.wishes.findWhere(
+          //  FOR ONE RECIPIENT, FIND ACTIVE WISHES
+    app.get("/showone", function(req, res) {
+        db.wishes.findOne(
           {where: {wishto: req.params.wishto,
-                   wishtostatus: true
-          }
+                  [Op.not]: {wstatus}}
         })
         .then(function(dbwishes) {
             res.json(dbwishes)
@@ -39,15 +28,15 @@ module.exports = function(app) {
 
 
            //  ADD NEW RECIPIENT
-    app.post("/api/wishto", function(req, res) {
+    app.post("/addperson", function(req, res) {
         db.wishes.create(req.body).then(function(dbwishes) {
             res.json(dbwishes);
         });
     });
 
 
-          //  UPDATE AN EXISTING WISH
-    app.put("/api/update", function(req, res) {
+          //  UPDATE AN EXISTING RECIPIENT'S WISH
+    app.put("/updtperson", function(req, res) {
         db.wishes.update(wishes,
           {where: {wishfrom: req.body.wishfrom,
                    wishcenter: req.body.wishcenter,
@@ -63,9 +52,10 @@ module.exports = function(app) {
 
 
           //  ARCHIVE AN EXISTING RECIPIENT
-          //  THERE WONT BE A DELETE FUNCTION
           //  RECORDS WILL BE KEPT FOR AUDITS
-    app.put("/api/update", function(req, res) {
+          //  SO THERE WON'T BE A DELETE FUNCTION
+
+    app.put("/arkive", function(req, res) {
         db.wishes.update(wishes,
           {where: {wishfrom: req.body.wishfrom,
                    wishcenter: req.body.wishcenter,

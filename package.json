@@ -1,7 +1,7 @@
 {
   "name": "wellwishes",
   "version": "1.0.0",
-  "description": "Medical care packages for recipients in developing countries",
+  "description": "Medical Care Packages for recipients in developing countries",
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",

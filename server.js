@@ -10,8 +10,25 @@ var bodyParser = require("body-parser");
 var app = express();
 var PORT = process.env.PORT || 3000;
 
+var Sequelize = require("sequelize");
 
+     // Creates mySQL connection using Sequelize, the empty string in the third argument spot is our password.
+//     var sequelize = new Sequelize("sequelize_chirpy", "root", "", {
+//         host: "localhost",
+//        port: 3306,
+//         dialect: "mysql",
+//         pool: {
+//             max: 5,
+//             min: 0,
+//             idle: 10000
+//         }
+//     });
+
+
+     //  the DB VARIABLE requires the MODELS FOLDER
+     //  MYSQL CONNECTS via the DB VARIABLE
 var db = require("./models");
+
 
       // EXPRESS USES BODY-PARSER UTILITIES urlencoded and json
       // TO CONVERT FROM BINARY to JSON FORMAT
@@ -24,19 +41,17 @@ app.use(express.static("public"));
 
      //  HTML AND API ROUTES
 
-require("./routes/apiRoutes.js")(app);
+require("./routes/testingRoute.js")(app);
+// require("./routes/apiRoutes.js")(app);
 // require("./routes/htmlRoutes.js")(app);
 
 
-    //  MYSQL CONNECTS via the DB VARIABLE
-    //  the DB VARIABLE requires the MODELS FOLDER
-    //
-    //  and START LISTENING on SERVER-SIDE PORT
-//console.log("NEXT LINE CONNECTS THE DB AND PORT LISTENING");
-//db.sequelize.sync({force: false}).then(function() {
+    // START LISTENING on SERVER-SIDE PORT
 
- //db.sequelize.sync().then(function() {
-   app.listen(PORT, function() {
-       console.log("SERVER listening on localhost Port:" + PORT);
-    });
-//});
+
+ db.sequelize.sync().then(function() {
+     app.listen(PORT, function() {
+       console.log("@@@@@@@@@  STEP ONE: SERVER listening on localhost Port: " + PORT);
+         });
+     console.log("%%%%%%%%%  STEP TWO: DB CONNECTION COMPLETED NO ERRORS");
+ });
