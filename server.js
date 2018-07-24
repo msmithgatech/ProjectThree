@@ -39,19 +39,19 @@ app.use(bodyParser.json());
 app.use(express.static("public"));
 
 
-     //  HTML AND API ROUTES
+     //  API ROUTES
 
-require("./routes/testingRoute.js")(app);
-// require("./routes/apiRoutes.js")(app);
+require("./routes/apiRoutes.js")(app);
 // require("./routes/htmlRoutes.js")(app);
 
 
     // START LISTENING on SERVER-SIDE PORT
 
-
  db.sequelize.sync().then(function() {
      app.listen(PORT, function() {
-       console.log("@@@@@@@@@  STEP ONE: SERVER listening on localhost Port: " + PORT);
+       console.log("]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]");
+       console.log("]]]]]]  STEP 1: SERVER listening on localhost Port: " + PORT);
          });
-     console.log("%%%%%%%%%  STEP TWO: DB CONNECTION COMPLETED NO ERRORS");
+     console.log("]]]]]]  STEP 2: DB CONNECTION  - NO ERRORS");
+     console.log("]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]");
  });

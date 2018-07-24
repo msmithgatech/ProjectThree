@@ -1,130 +1,58 @@
+//  ROUTES TO SAVE TO THE DB
+
         //  DEPENDENCY:  REQUIRE THE DB MODEL (wishes table)
 var db = require("../models");
-
+var Sequelize = require("sequelize");
+var Op = Sequelize.Op;
 
        //==== CRUD ROUTES  ====
 module.exports = function(app) {
 
-          //  FIND ALL RECIPIENTS
-    app.get("/showall", function(req, res) {
-            db.wishes.findAll({group: "wishcenter, wishfrom"})
-        })
-            .then(function(dbwishes) {
-                res.json(dbwishes)
-            })
-        };
-
-
-          //  FOR ONE RECIPIENT, FIND ACTIVE WISHES
-    app.get("/showone", function(req, res) {
-        db.wishes.findOne(
-          {where: {wishto: req.params.wishto,
-                  [Op.not]: {wstatus}}
-        })
-        .then(function(dbwishes) {
-            res.json(dbwishes)
-        })
-    });
-
-
-           //  ADD NEW RECIPIENT
-    app.post("/addperson", function(req, res) {
-        db.wishes.create(req.body).then(function(dbwishes) {
+    //  FIND ALL RECIPIENTS
+    app.get("/inqGlobal", function (req, res) {
+        db.Wishes.findAll({group: "wishcenter, wishfrom, wishto"},
+            {where:
+                    {
+                        wishtostatus: "Active"
+                    }
+            }).then(function(dbwishes) {
             res.json(dbwishes);
         });
     });
 
 
-          //  UPDATE AN EXISTING RECIPIENT'S WISH
-    app.put("/updtperson", function(req, res) {
-        db.wishes.update(wishes,
-          {where: {wishfrom: req.body.wishfrom,
-                   wishcenter: req.body.wishcenter,
-                   wishto: req.body.wishto,
-                   pkgtype: req.body.pkgtype,
-                   wishtostatus: true
-          }
-        })
-        .then(function(dbwishes) {
-            res.json(dbwishes);
+    //  UPDATING A RECIPIENT'S STATUS FROM
+    //  ACTIVE TO INACTIVE ARCHIVES THAT RECORD
+    app.put("/admStatus/:id", function (req, res) {
+        db.Wishes.update(
+           {
+               wishtostatus: req.body.wishtostatus
+           },
+           {where:
+              {
+               id: req.body.id,
+               wishtostatus: "Active"
+              }
+           }).then(function(dbwishes) {
+                res.json(dbwishes);
+                  //  ERRORS ARE THROWN    (VALIDATION ERROR or ERROR FLAG)
+                  //  CATCH THE THROWN ERROR TO PREVENT APP CRASH
+           }).catch(function(err) {
+                res.json(err);
         });
     });
 
 
-          //  ARCHIVE AN EXISTING RECIPIENT
-          //  RECORDS WILL BE KEPT FOR AUDITS
-          //  SO THERE WON'T BE A DELETE FUNCTION
-
-    app.put("/arkive", function(req, res) {
-        db.wishes.update(wishes,
-          {where: {wishfrom: req.body.wishfrom,
-                   wishcenter: req.body.wishcenter,
-                   wishto: req.body.wishto,
-                   pkgtype: req.body.pkgtype,
-                   deliverdt: req.body.deliverdt,
-                   wishtostatus: true
-          }
-        })
-        .then(function(dbwishes) {
-            res.json(dbwishes);
+    //  GLOBAL ARCHIVE LIST
+    app.get("/arkGlobal", function (req, res) {
+        db.Wishes.findAll({group: "wishcenter, wishfrom, wishto"},
+           {where:
+              {
+                wishtostatus: "Inactive"
+              }
+           }).then(function(dbwishes) {
+             res.json(dbwishes);
         });
-    });
+    })
 
 };
-
-
-
-
-
-
-//================================================================================================
-    //  ADD A WISH
- //   app.post("/api/new", function(req, res) {
- //       console.log("Adding a new WISH:");
- //       console.log(req.body);
-
- //       var dbQuery = "INSERT INTO wishes (giftFrom, giftCenter, giftTo, pkgType, ";
- //           dbQuery+= "requestDt, carrier, giftToStatus) VALUES (?, ?, ?, ?, ?, ?, ?)";
-
-        //INSERT INTO wishes (id, giftFrom, giftCenter, giftTo, pkgType, requestDt,
-        //                      carrier, shipDt, deliverDt, status, comment)
-
-   //     connection.query(dbQuery, [req.body.giftFrom, req.body.giftCenter, req.body.giftTo, req.body.pkgType,
-     //                              req.body.requestDt, req.body.carrier, req.body.giftToStatus],
-   //         function(err, result) {
-   //             if (err) throw err;
-   //             console.log("============  BEGIN   ADD NEW REQUEST   ===========");
-   //             console.log(" ON " + req.body.requestDT + " GIFTBAG " + req.body.pkgType );
-   //             console.log("ADDED for " + req.body.giftTo + "by " + req.body.giftFrom);
-   //             console.log("============  END     ADD NEW REQUEST   ===========");
-   //             res.end();
-   //         }
-   //     );
-   // });
-
-    //  UPDATE A WISH --- SHIP DATE, DELIVERY DATE, STATUS (active or inactive), COMMENTS (if inactive)
-//    app.put("/api/update", function(req, res) {
-//        console.log("UPDATING A WISH:");
-//        console.log(req.body);
-
-//        var dbQuery = "UPDATE wishes SET ";
-//            dbQuery += "requestDT = ?, carrier = ?, shipDt = ?, ";
-//            dbQuery += "deliveryDT = ?, giftToStatus = ?, giftcomment = ? ";
-//            dbQuery += "WHERE (giftFrom = ? AND giftCenter = ? ";
-//            dbQuery += "AND giftTo = ? AND pkgType = ? AND goftToStatus = ?)";
-
-//        connection.query(dbQuery, [req.body.requestDT, req.body.carrier, req.body.shipDt,
-//                                   req.body.deliveryDt, req.body.giftToStatus, req.body.giftcomment,
-//                                   req.body.giftFrom, req.body.giftCenter, req.body.giftTo,
-//                                   req.body.pkgType, req.body.giftToStatus],
-//            function(err, result) {
-//                if (err) throw err;
-//                console.log("#############  BEGIN   UPDATE EXISTING REQUEST   #############");
-//                console.log(" ON " + req.body.requestDT + " GIFTBAG " + req.body.pkgType );
-//                console.log("UPDATED for " + req.body.giftTo + "by " + req.body.giftFrom);
-//                console.log("#############  END     UPDATE EXISTING REQUEST   #############");
-//                res.end();
-//            }
-//        );
-//    });
-

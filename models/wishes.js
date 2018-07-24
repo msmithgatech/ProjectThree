@@ -5,24 +5,37 @@ module.exports = function(sequelize, DataTypes) {
             autoIncrement: true,
             primaryKey: true
         },
+        wishcntry: {
+            type: DataTypes.STRING,
+            allowNull: false,
+            validate: {
+                len: [1, 90]}
+            },
         wishcenter: {
             type: DataTypes.STRING,
-            allowNull: false
+            allowNull: false,
+            validate: {
+                len: [1, 180]}
         },
-        wishfrom: {
+        wishadmin: {
             type: DataTypes.STRING,
-            allowNull: false
+            allowNull: false,
+            validate: {
+                len: [1, 100]}
         },
-
         wishto: {
             type: DataTypes.STRING,
-            allowNull: false
+            allowNull: false,
+            validate: {
+                len: [1, 100]}
         },
         pkgtype: {
             type: DataTypes.STRING,
-            allowNull: false
+            allowNull: false,
+            validate: {
+                len: [1, 100]}
         },
-        requestdt: {
+        request_At: {
             type: DataTypes.DATE,
             allowNull: false,
             defaultValue: 20991231
@@ -32,18 +45,24 @@ module.exports = function(sequelize, DataTypes) {
             allowNull: false,
             defaultValue: "Nippon International"
         },
-        shipdt: {
+        shipped_At: {
             type: DataTypes.DATE,
-            allowNull: false
+            defaultValue: 0
+        },
+        delivery_At: {
+            type: DataTypes.DATE,
+            defaultValue: 0
         },
         wishtostatus: {
             type: DataTypes.STRING,
-            defaultValue: true
+            defaultValue: "Active"
         },
         remarks: {
             type: DataTypes.TEXT,
             allowNull: false,
-            defaultValue: ""
+            defaultValue: "",
+            validate: {
+                len: [1, 200]}
         }
     });
     return Wishes;
