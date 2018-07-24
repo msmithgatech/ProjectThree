@@ -8,7 +8,7 @@ var bodyParser = require("body-parser");
      // WEB SERVER CONNECTION IS PORT 3090
      // LOCAL MYSQL DB CONNECTION IS ON PORT 3306 (PER MYSQL SHELL)
 var app = express();
-var PORT = process.env.PORT || 3000;
+var PORT = process.env.PORT || 8080;
 
 var Sequelize = require("sequelize");
 
