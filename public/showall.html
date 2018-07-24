@@ -15,9 +15,14 @@
     <link href='https://fonts.googleapis.com/css?family=Raleway:400,100,200,300,400italic,500,100italic,700'
           rel='stylesheet' type='text/css'>
 
+<!--   JQUERY SCRIPT IF NEEDED
+    <script src="https://code.jquery.com/jquery.js"></script>
+--->
+
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <!-- Compiled and minified CSS -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/css/materialize.min.css">
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/css/materialize.min.css">
 
     <link rel="stylesheet" href="assets/css/normalize.css">
     <link rel="stylesheet" href="assets/css/fonticons.css">
@@ -25,107 +30,36 @@
     <link rel="stylesheet" href="assets/css/font-awesome.min.css">
     <link rel="stylesheet" href="assets/css/bootstrap.min.css">
     <link rel="stylesheet" href="assets/css/bootstrap.css">
-</head>
-<body>
 
-        <!--  REPORT TITLE  -->
+<!--   BOOTSTRAP IF NEEDED
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+---->
+    </head>
+    <body>
+
+            <!--  REPORT TITLE  -->
     <div>
-        <h4>WellWishes Recipients</h4>
-        <h4>by Country and Representative</h4>
+        <h4>WellWishes Recipients by Country</h4>
+        <h4>Center, Admin and Giftee</h4>
     </div>
+
     <br>
-        <!--  WISH CENTER and CENTRE PHOTO  -->
-    <div>
-        <img>
+           <!--  ORDERED LIST OF  CLINIC, ADVOCATES, RECIPIENTS AND RECIPIENT PACKAGES  -->
+
+    <div id="container" class="inqCntry">Country and National FLag"
+        <div id="wwCntry">
+            <ol id="inqClinics">Clinics
+                <li class="inqClinics-container">
+                </li>
+            </ol>
+        </div>
     </div>
 
-        <!--  WISH CENTER REP and their RECIPIENTS  -->
-    <div id="wFrom">
-        <a>
-             <ol>
-                <li></li>
-             </ol>
-        </a>
-    </div>      <!----  END WISHFROM  ---->
+    </div>      <!----  END WELLWISHES COUNTRY, CENTER, ADVOCATE  ---->
+
+        <!-- Custom Script -->
+    <script src="./assets/js/show.js" type="text/javascript"></script>
 
 </body>
-
-
-
-<!--  When user clicks add-btn  -->
-
-$("#iqShowAll").on("click", function(event) {
-event.preventDefault();
-
-      // ADD A NEW RECIPIENT using HTML FORM and THE DB MODEL
-
-    var tempstatus = "active";
-
-    var newWish = {
-    wishcenter: $("#addCntr").val().trim(),
-    wishfrom: $("#addWishFrom").val().trim(),
-    wishto: $("#addWishTo").val().trim(),
-    pkgtype: $("#addPkg").val().trim(),
-    request_At: moment().format("YYYY-MM-DD HH:mm:ss"),
-    wishtostatus: tempstatus
-
-
-           //  ????  NEED TO SUPPLY DEFAULT VALUES ON AN ADD?  ????
-    //  carrier: $("#addCarrier").val().trim(),
-    //  ship_At: moment().format("YYYY-MM-DD HH:mm:ss"),
-    //  deliver_At: moment().format("YYYY-MM-DD HH:mm:ss"),
-    //  remarks: ""
-
-};
-
-console.log(newWish);
-
-// Send an AJAX POST-request with jQuery
-$.post("/api/new", newChirp)
-// On success, run the following code
-.then(function() {
-
-var row = $("<div>");
-
-    row.addClass("wCentre");
-    row.append("<img>");
-    row.append(src="<img src='./images/ghana3x2WinPhoto.png\'>");
-
-    row.append("<p>" + newChirp.author + " chirped: </p>");
-    row.append("<p>" + newChirp.body + "</p>");
-    row.append("<p>At " + moment(newChirp.created_at).format("h:mma on dddd") + "</p>");
-
-    $("#chirp-area").append(row);
-
-    });
-
-    // Empty each input box by replacing the value with an empty string
-    $("#author").val("");
-    $("#chirp-box").val("");
-    });
-
-    // When the page loads, grab all of our chirps
-    $.get("/showall", function(data) {
-
-    if (data.length !== 0) {
-
-    for (var i = 0; i < data.length; i++) {
-
-    var row = $("<div>");
-        row.addClass("chirp");
-
-        row.append("<p>" + data[i].author + " chirped.. </p>");
-        row.append("<p>" + data[i].body + "</p>");
-        row.append("<p>At " + moment(data[i].created_at).format("h:mma on dddd") + "</p>");
-
-        $("#chirp-area").prepend(row);
-
-        }
-
-        }
-
-        });
-
-</script>
 
 </html>
